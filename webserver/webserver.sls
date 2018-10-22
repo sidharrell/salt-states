@@ -27,3 +27,9 @@ apache:
     - onchanges:
       - file: site_source_code
 
+minion:
+  module.run:
+    - name: service.restart
+    - m_name: salt-minion
+    - onchanges:
+      - file: minion_configuration_file
