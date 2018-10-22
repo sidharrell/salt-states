@@ -3,29 +3,21 @@ site_source_code:
     - name: /var/www/html/index.html
     - source: salt://webserver/index.html
 
+{% if grains['os'] == 'RedHat' or grains['os'] == 'CentOS' %}
+{% set service_name = 'httpd' %}
+{% elif grains['os'] == 'Ubuntu' %}
+{% set service_name = 'httpd' %}
+{% endif %}
+
 apache:
   pkg.installed:
-    {% if grains['os'] == 'RedHat' or grains['os'] == 'CentOS' %}
-    - name: httpd
-    {% elif grains['os'] == 'Ubuntu' %}
-    - name: apache2
-    {% endif %}
+    - name: {{ service_name }}
   service.running:
-    {% if grains['os'] == 'RedHat' or grains['os'] == 'CentOS' %}
-    - name: httpd
+    - name: {{ service_name }}
     - require:
-      - pkg: httpd
-    {% elif grains['os'] == 'Ubuntu' %}
-    - name: apache2
-    - require:
-      - pkg: apache2
-    {% endif %}
+      - pkg: {{ service_name }}
   module.run:
     - name: service.reload
-    {% if grains['os'] == 'RedHat' or grains['os'] == 'CentOS' %}
-    - m_name: httpd
-    {% elif grains['os'] == 'Ubuntu' %}
-    - m_name: apache2
-    {% endif %}
+    - m_name: {{ service_name }}
     - onchanges:
       - file: site_source_code
