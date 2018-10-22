@@ -6,7 +6,7 @@ site_source_code:
 {% if grains['os'] == 'RedHat' or grains['os'] == 'CentOS' %}
 {% set service_name = 'httpd' %}
 {% elif grains['os'] == 'Ubuntu' %}
-{% set service_name = 'httpd' %}
+{% set service_name = 'apache2' %}
 {% endif %}
 
 apache:
