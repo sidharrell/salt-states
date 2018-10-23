@@ -21,3 +21,14 @@ haproxy:
     - m_name: {{ service_name }}
     - onchanges:
       - file: haproxy_configuration
+
+
+{% if grains['os'] == 'RedHat' or grains['os'] == 'CentOS' %}
+{% set service_name = 'httpd' %}
+{% elif grains['os'] == 'Ubuntu' %}
+{% set service_name = 'apache2' %}
+{% endif %}
+
+apache:
+  pkg.removed:
+    - name: {{ service_name }}
