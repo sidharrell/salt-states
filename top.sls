@@ -1,5 +1,5 @@
 base:
   'saltmaster.vhwebdev.com':
-    - loadbalancer
+    - loadbalancer/loadbalancer
   'minion*':
-    - webserver
+    - webserver/webserver
