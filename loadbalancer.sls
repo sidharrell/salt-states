@@ -1,13 +1,13 @@
-site_source_code:
+haproxy_configuration:
   file.managed:
-    - name: /var/www/html/index.html
-    - source: salt://webserver/index.html
+    - name: /etc/haproxy/haproxy.cfg
+    - source: salt://loadbalancer/haproxy.cfg
+haproxy_ssl_cert:
+  file.managed:
+    - name: /etc/pki/tls/certs/haproxy/selfsigned.pem
+    - source: salt://loadbalancer/selfsigned.pem
 
-{% if grains['os'] == 'RedHat' or grains['os'] == 'CentOS' %}
-{% set service_name = 'httpd' %}
-{% elif grains['os'] == 'Ubuntu' %}
-{% set service_name = 'apache2' %}
-{% endif %}
+{% set service_name = 'haproxy' %}
 
 apache:
   pkg.installed:
