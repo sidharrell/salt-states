@@ -20,4 +20,4 @@ apache:
     - name: service.reload
     - m_name: {{ service_name }}
     - onchanges:
-      - file: site_source_code
+      - file: haproxy_configuration
