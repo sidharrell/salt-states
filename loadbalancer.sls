@@ -9,7 +9,7 @@ haproxy_ssl_cert:
 
 {% set service_name = 'haproxy' %}
 
-apache:
+haproxy:
   pkg.installed:
     - name: {{ service_name }}
   service.running:
