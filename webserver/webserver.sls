@@ -3,6 +3,11 @@ site_source_code:
     - name: /var/www/html/index.html
     - source: salt://webserver/index.html
 
+minion_configuration_file:
+  file.managed:
+    - name: /etc/salt/minion.d/010-webserver.conf
+    - source: salt://webserver/010-webserver.conf
+
 {% if grains['os'] == 'RedHat' or grains['os'] == 'CentOS' %}
 {% set service_name = 'httpd' %}
 {% elif grains['os'] == 'Ubuntu' %}
@@ -21,3 +26,10 @@ apache:
     - m_name: {{ service_name }}
     - onchanges:
       - file: site_source_code
+
+minion:
+  module.run:
+    - name: service.restart
+    - m_name: salt-minion
+    - onchanges:
+      - file: minion_configuration_file

@@ -2,6 +2,7 @@ haproxy_configuration:
   file.managed:
     - name: /etc/haproxy/haproxy.cfg
     - source: salt://loadbalancer/haproxy.cfg
+    - template: jinja
 haproxy_ssl_cert:
   file.managed:
     - name: /etc/pki/tls/certs/haproxy/selfsigned.pem
